@@ -7,6 +7,7 @@ Navigate your terminal to this folder. Run `pip install -r requirements.txt` to 
 Run the following:
 
 ```bash
-python3 problem_8_2.py
-python3 problem_8_3.py
+python3 problem_8.py 2  # Problem 2
+python3 problem_8.py 3  # Problem 3
+python3 problem_8.py 4  # Problem 4
 ```

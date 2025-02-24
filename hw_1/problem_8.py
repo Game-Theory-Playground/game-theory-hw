@@ -24,7 +24,6 @@ def compute_displacement_field(x, y, u11, u12, u21, u22)->[float, float]:
     Assumes probability strategy is at row 1 for player 1 and col 2 for player 2.
     u11...u22 arrays  of the utilities [player1, player2] for each strategy. For
     example u12 is the strategy of the first row and 2nd column.
-    TODO document this better
     """
     u = []
     v = []
