@@ -8,4 +8,5 @@ Run the following:
 
 ```bash
 python3 problem_8_2.py
+python3 problem_8_3.py
 ```
