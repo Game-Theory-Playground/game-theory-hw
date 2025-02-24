@@ -1,7 +1,15 @@
+import sys
+
 import matplotlib
 matplotlib.use("TkAgg")  # Use a GUI backend
 import matplotlib.pyplot as plt
 import numpy as np
+
+if len(sys.argv) < 2:
+    ARG = 4
+else:
+    ARG = int(sys.argv[1])
+
 
 def normalize_vectors(u, v):
     magnitude = np.sqrt(u**2 + v**2)
@@ -61,9 +69,12 @@ def add_subplot(axes, i, scatter_x, scatter_y, u11, u12, u21, u22, x_label, y_la
 
     u, v = compute_displacement_field(x, y, u11, u12, u21, u22)
     u,v, magnitude = normalize_vectors(u,v)
-    axes[i].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
+    if ARG == 4:
+        axes[i].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
+    
     axes[i].scatter(scatter_x, scatter_y, color="black")
-    axes[i].quiver(x,y,u,v)
+    if ARG >= 3:
+        axes[i].quiver(x,y,u,v)
     axes[i].set_xlabel(x_label)
     axes[i].set_ylabel(y_label)
     axes[i].set_title(title)
@@ -71,6 +82,8 @@ def add_subplot(axes, i, scatter_x, scatter_y, u11, u12, u21, u22, x_label, y_la
     axes[i].set_ylim(-0.1, 1.1)
 
 if __name__ == "__main__":
+
+    
 
     fig, axes = plt.subplots(1,3)
 
