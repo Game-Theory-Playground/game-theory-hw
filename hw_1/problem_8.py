@@ -53,47 +53,39 @@ def compute_displacement_field(x, y, u11, u12, u21, u22)->[float, float]:
     v = np.array(v)
     return u, v
 
+
+def add_subplot(axes, i, scatter_x, scatter_y, u11, u12, u21, u22, x_label, y_label, title):
+    x, y = np.meshgrid(np.linspace(0, 1, 20),  
+                   np.linspace(0, 1, 20)) 
     
+
+    u, v = compute_displacement_field(x, y, u11, u12, u21, u22)
+    u,v, magnitude = normalize_vectors(u,v)
+    axes[i].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
+    axes[i].scatter(scatter_x, scatter_y, color="black")
+    axes[i].quiver(x,y,u,v)
+    axes[i].set_xlabel(x_label)
+    axes[i].set_ylabel(y_label)
+    axes[i].set_title(title)
+    axes[i].set_xlim(-0.1, 1.1)
+    axes[i].set_ylim(-0.1, 1.1)
 
 if __name__ == "__main__":
 
     fig, axes = plt.subplots(1,3)
 
-    x, y = np.meshgrid(np.linspace(0, 1, 20),  
-                   np.linspace(0, 1, 20)) 
+    add_subplot(axes, 0, [1], [1],
+                 [-3,-3], [0,-3],[-3,0], [-2,-2], 
+                 "Probability Player 1: Confess", "Probability Player 2: Confess", "Prisoner's Dilemma")
     
-
-    u, v = compute_displacement_field(x, y, [-3,-3], [0,-3],[-3,0], [-2,-2])
-    u,v, magnitude = normalize_vectors(u,v)
-    axes[0].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
-    axes[0].scatter([1], [1], color="black")
-    axes[0].quiver(x,y,u,v)
-    axes[0].set_xlabel("Probability Player 1: Confess")
-    axes[0].set_ylabel("Probability Player 2: Confess")
-    axes[0].set_title("Prisoner's Dilemma")
-
-    u, v = compute_displacement_field(x, y, [0,0], [10,1], [1,10], [0,0])
-    u,v, magnitude = normalize_vectors(u,v)
-    axes[1].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
-    axes[1].scatter([0.9090], [0.9090], color="black")
-    axes[1].quiver(x,y,u,v, color="blue")
-    axes[1].set_xlabel("Probability Player 1: Insist")
-    axes[1].set_ylabel("Probability Player 2: Insist")
-    axes[1].set_title("Insist-Accept")
+    add_subplot(axes, 1, [0, 0.9090, 1], [1, 0.9090, 0],
+                [0,0], [10,1], [1,10], [0,0], 
+                "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept")
+    
+    add_subplot(axes, 2, [0, 0.5, 1], [1, 0.5, 0],
+            [-2,-2], [4,0], [0,4], [2,2],
+            "Probability Player 1: Hawk", "Probability Player 2: Hawk", "Hawk-Dove")
 
 
-    u, v = compute_displacement_field(x, y, [-2,-2], [4,0], [0,4], [2,2])
-    u,v, magnitude = normalize_vectors(u,v)
-    axes[2].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
-    axes[2].scatter([0.5], [0.5], color="black")
-    axes[2].quiver(x,y,u,v, color="blue")
-    axes[2].set_xlabel("Probability Player 1: Hawk")
-    axes[2].set_ylabel("Probability Player 2: Hawk")
-    axes[2].set_title("Hawk-Dove")
-
-
-    for i in range(3):
-        axes[i, ].set_xlim(0, 1.1)
-        axes[i, ].set_ylim(0, 1.1)
 
     plt.show(block=True)
