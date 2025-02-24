@@ -3,6 +3,9 @@ matplotlib.use("TkAgg")  # Use a GUI backend
 import matplotlib.pyplot as plt
 import numpy as np
 
+def compute_displacement_field(x,y)->[float, float]:
+
+    return u, v
 
 if __name__ == "__main__":
 
@@ -11,6 +14,7 @@ if __name__ == "__main__":
     x, y = np.meshgrid(np.linspace(0, 1, 20),  
                    np.linspace(0, 1, 20)) 
     
+
     u = 1-x
     v = 1-y
     magnitude = np.sqrt(u**2 + v**2)

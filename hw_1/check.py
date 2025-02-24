@@ -1,15 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Create strategy probability grid
+
 x, y = np.meshgrid(np.linspace(0, 1, 20), np.linspace(0, 1, 20))
 
-# Compute best responses (simplified as shifting towards 0.5)
-# u = (1-2*x) - 0.5  # Change in kicker's probability
-# v = (1-2*y) - 0.5 # Change in goalkeeper's probability
-
-# u = np.array(0)
-# v = np.array(0)
 u = []
 v = []
 
@@ -44,21 +38,14 @@ for x_temp, y_temp in zip(x,y):
 u = np.array(u)
 v = np.array(v)
 
-# Compute magnitude
 magnitude = np.sqrt(u**2 + v**2)
 
-# Plot vector field
 fig, ax = plt.subplots(figsize=(6,6))
 background = ax.pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto')
 fig.colorbar(background, label="Strategy Adjustment Magnitude")
-
-# Quiver plot (vector field)
 ax.quiver(x, y, u, v, color="black")
-
-# Nash equilibrium point
 ax.scatter([0.5], [0.5], color="white", edgecolors="black", s=100, label="Nash Equilibrium")
 
-# Labels
 ax.set_xlabel("P[kick right]")
 ax.set_ylabel("P[dive right]")
 ax.set_title("Penalty Shot Game - Strategy Flow")
