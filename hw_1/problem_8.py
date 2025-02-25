@@ -68,7 +68,7 @@ def add_subplot(axes, i, scatter_x, scatter_y, u11, u12, u21, u22, x_label, y_la
 
     u, v = compute_displacement_field(x, y, u11, u12, u21, u22)
     u,v, magnitude = normalize_vectors(u,v)
-    if ARG == 4:
+    if ARG >= 4:
         axes[i].pcolormesh(x, y, magnitude, cmap="RdYlBu", shading='auto', alpha=0.5)
     
     axes[i].scatter(scatter_x, scatter_y, color="black")
@@ -82,22 +82,43 @@ def add_subplot(axes, i, scatter_x, scatter_y, u11, u12, u21, u22, x_label, y_la
 
 if __name__ == "__main__":
 
-    
-
     fig, axes = plt.subplots(1,3)
-
-    add_subplot(axes, 0, [1], [1],
-                 [-3,-3], [0,-3],[-3,0], [-2,-2], 
-                 "Probability Player 1: Confess", "Probability Player 2: Confess", "Prisoner's Dilemma")
+    if ARG <= 4:
+        add_subplot(axes, 0, [1], [1],
+                    [-3,-3], [0,-3],[-3,0], [-2,-2], 
+                    "Probability Player 1: Confess", "Probability Player 2: Confess", "Prisoner's Dilemma")
+        
+        add_subplot(axes, 1, [0, 0.9090, 1], [1, 0.9090, 0],
+                    [0,0], [10,1], [1,10], [0,0], 
+                    "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept")
+        
+        add_subplot(axes, 2, [0, 0.5, 1], [1, 0.5, 0],
+                [-2,-2], [4,0], [0,4], [2,2],
+                "Probability Player 1: Hawk", "Probability Player 2: Hawk", "Hawk-Dove")
     
-    add_subplot(axes, 1, [0, 0.9090, 1], [1, 0.9090, 0],
-                [0,0], [10,1], [1,10], [0,0], 
-                "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept")
-    
-    add_subplot(axes, 2, [0, 0.5, 1], [1, 0.5, 0],
-            [-2,-2], [4,0], [0,4], [2,2],
-            "Probability Player 1: Hawk", "Probability Player 2: Hawk", "Hawk-Dove")
+    if ARG == 5:
+        add_subplot(axes, 0, [1], [0],
+            [0,0], [10,1], [1,10], [1,10], 
+            "Probability Player 1: Insist", "Probability Player 2: Insist", "Replaced (accept, accept) with (insist, accept)")
+        
+        add_subplot(axes, 1, [0], [1],
+            [0,0], [10,1], [1,10], [10,1], 
+            "Probability Player 1: Insist", "Probability Player 2: Insist", "Replaced (accept, accept) with (accept, insist)")
+        
+        add_subplot(axes, 2, [0,0.9090,1], [1,0.9090,0],
+            [0,0], [10,1], [1,10], [0,0], 
+            "Probability Player 1: Insist", "Probability Player 2: Insist", "Replaced (accept, accept) with (insist, insist)")
 
 
+    if ARG == 6:
+        add_subplot(axes, 0, [], [],
+                    [0,0], [10,1], [1,10], [0,0], 
+                    "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept Original")
+        add_subplot(axes, 1, [], [],
+            [0,0], [20,2], [2,20], [0,0], 
+            "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept Proportionally Scaled")
+        add_subplot(axes, 2, [], [],
+            [1,1], [100,2], [2,100], [1,1], 
+            "Probability Player 1: Insist", "Probability Player 2: Insist", "Insist-Accept Disproportionally Scaled")
 
     plt.show(block=True)

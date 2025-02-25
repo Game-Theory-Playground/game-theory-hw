@@ -48,6 +48,6 @@ ax.scatter([0.5], [0.5], color="white", edgecolors="black", s=100, label="Nash E
 
 ax.set_xlabel("P[kick right]")
 ax.set_ylabel("P[dive right]")
-ax.set_title("Penalty Shot Game - Strategy Flow")
+ax.set_title("Penalty Shot Game")
 ax.legend()
 plt.show()
