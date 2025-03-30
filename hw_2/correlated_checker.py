@@ -25,6 +25,7 @@ B       p3      p4
 """
 
 ########## CHANGE THESE BASED ON PROBLEM ##########
+
 a1 = -100
 c1 = -100
 a2 = 1
@@ -34,13 +35,33 @@ c2 = 1
 b2 = 0
 d2 = 0
 
+# a1 = -1
+# c1 = -1
+# a2 = 0
+# d1 = 20
+# b1 = 20
+# c2 = 0
+# b2 = -10
+# d2 = -10
+
+# a1 = 0
+# c1 = 0
+# a2 = 3
+# d1 = 1
+# b1 = 1
+# c2 = 3
+# b2 = 2
+# d2 = 2
+
 p1 = 0
 p2 = 0.5
 p3 = 0.5
 p4 = 0
 
 
+
 ########## Coarse Correlated ##########
+
 
 # Utilities 
 u1 =  a1*p1 + a2*p2 + b1*p3 + b2*p4   # Player 1
@@ -54,9 +75,9 @@ u2_right1 = c1 * (p1+p2) + c2 * (p3+p4)
 u2_right2 = d1 * (p1+p2) + d2 * (p3+p4)
 
 is_CCE = (u1 >= u1_right1 
-        and u1 >= u1_right2 
-        and u2 >= u2_right1 
-        and u2 >= u2_right2)
+and u1 >= u1_right2 
+and u2 >= u2_right1 
+and u2 >= u2_right2)
 
 # Output
 print("------ Coarse Correlated Equilibrium ------")
@@ -88,9 +109,9 @@ player2_left2 = d1*p2 + d2*p4
 player2_right2 = c1*p2 + c2*p4
 
 is_CE = (player1_left1 >= player1_right1 
-        and player1_left2 >= player1_right2 
-        and player2_left1 >= player2_right1 
-        and player2_left2 >= player2_right2)
+and player1_left2 >= player1_right2 
+and player2_left1 >= player2_right1 
+and player2_left2 >= player2_right2)
 
 # Output
 print("\n------  Correlated Equilibrium ------")
