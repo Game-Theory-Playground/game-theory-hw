@@ -1,125 +1,104 @@
 """
-Given the game and probability distribution, determines
-if equalities for coarse correlated equilibrium
+Given a 2-player game utilities (u) and probability distribution (p), 
+determines if the equalities for coarse correlated equilibrium
 and correlated equilibrium hold true.
-
-
-Set the variables as shown below for...
-
-Game Utility: 
-
-        C        D
------------------------
-A   (a1, c1)  (a2, d1) 
-B   (b1, c2)  (b2, d2)
-
-
-Probabilities:
-
-        C        D
------------------------
-A       p1      p2 
-B       p3      p4
-
 
 """
 
 ########## CHANGE THESE BASED ON PROBLEM ##########
 
-a1 = -100
-c1 = -100
-a2 = 1
-d1 = -1
-b1 = -1
-c2 = 1
-b2 = 0
-d2 = 0
+# Utility
+u = [
+    [(-100,-100), (1,-1)],
+    [(-1,1), (0,0)],
+]
 
-# a1 = -1
-# c1 = -1
-# a2 = 0
-# d1 = 20
-# b1 = 20
-# c2 = 0
-# b2 = -10
-# d2 = -10
-
-# a1 = 0
-# c1 = 0
-# a2 = 3
-# d1 = 1
-# b1 = 1
-# c2 = 3
-# b2 = 2
-# d2 = 2
-
-p1 = 0
-p2 = 0.5
-p3 = 0.5
-p4 = 0
+# Probability
+p = [
+    [0, 0.5],
+    [0.5, 0]
+]
 
 
 
 ########## Coarse Correlated ##########
-
+player1_strats = len(u[1])
+player2_strats = len(u)
+prob_count = len(p) * len(p[1])
+is_CCE = True
 
 # Utilities 
-u1 =  a1*p1 + a2*p2 + b1*p3 + b2*p4   # Player 1
-u2 =  c1*p1 + d1*p2 + c2*p3 + d2*p4   # Player 2
-
-# Inequalities
-u1_right1 = a1 * (p1+p3) + a2 * (p2+p4)
-u1_right2 = b1 * (p1+p3) + b2 * (p2+p4)
-
-u2_right1 = c1 * (p1+p2) + c2 * (p3+p4)
-u2_right2 = d1 * (p1+p2) + d2 * (p3+p4)
-
-is_CCE = (u1 >= u1_right1 
-and u1 >= u1_right2 
-and u2 >= u2_right1 
-and u2 >= u2_right2)
-
-# Output
+u1 = 0
+u2 = 0
+for i in range(player1_strats):
+    for j in  range(player2_strats):
+        u1 += u[i][j][0] * p[i][j]
+        u2 += u[i][j][1] * p[i][j]
+    
 print("------ Coarse Correlated Equilibrium ------")
 print(f"> Player 1 Utility: {u1}")
 print(f"> Player 2 Utility: {u2}")
-print(f"> Inequalities:")
-print(f"       {u1} ≥? {u1_right1}")
-print(f"       {u1} ≥? {u1_right2}")
-print(f"       {u2} ≥? {u2_right1}")
-print(f"       {u2} ≥? {u2_right2}")
+
+print(f"> Player 1 Inequalities:")
+# Player 1  Inequalities 
+for i in range(player1_strats):
+    right = 0
+    for j in range(player2_strats):
+        for k in range(player2_strats):
+            right += u[i][j][0] * p[k][j]
+    print(f"       {u1} ≥? {right}")
+    is_CCE = is_CCE and u1 >= right 
+    
+print(f"> Player 2 Inequalities:") 
+for i in range(player2_strats):
+    right = 0
+    for j in range(player1_strats):
+        for k in range(player2_strats):
+            right += u[j][i][1] * p[j][k]
+    print(f"       {u2} ≥? {right}")
+    is_CCE = is_CCE and u2 >= right 
+  
+
+
 print(f"> This is {'' if is_CCE else 'Not '}a Coarse Correlated Equilibrium!")
 
 
 
-########## Correlated ##########
+# ########## Correlated ##########
+is_CE = True
 
-
-# Inequalities
-player1_left1 = a1*p1 + a2*p2
-player1_right1 = b1*p1 + b2*p2
-
-player1_left2 = b1*p3 + b2*p4
-player1_right2 = a1*p3 + a2*p4
-
-player2_left1 = c1*p1 + c2*p3
-player2_right1 = d1*p1 + d2*p3
-
-player2_left2 = d1*p2 + d2*p4
-player2_right2 = c1*p2 + c2*p4
-
-is_CE = (player1_left1 >= player1_right1 
-and player1_left2 >= player1_right2 
-and player2_left1 >= player2_right1 
-and player2_left2 >= player2_right2)
-
-# Output
 print("\n------  Correlated Equilibrium ------")
+
 print(f"> Player 1 Inequalities:")
-print(f"       {player1_left1} ≥? {player1_right1}")
-print(f"       {player1_left2} ≥? {player1_right2}")
+for i in range(player1_strats):
+    for j in range(player1_strats):
+        if i == j:
+            continue
+
+        left = 0
+        right = 0
+
+        for k in range(player2_strats):
+            left += u[i][k][0] * p[i][k]
+            right += u[j][k][0] * p[i][k]
+        print(f"       {left} ≥? {right}")
+        is_CE = is_CE and left >= right 
+
 print(f"> Player 2 Inequalities:")
-print(f"       {player2_left1} ≥? {player2_right1}")
-print(f"       {player2_left2} ≥? {player2_right2}")
+for i in range(player2_strats):
+    for j in range(player2_strats):
+        if i == j:
+            continue
+
+        left = 0
+        right = 0
+
+        for k in range(player1_strats):
+            left += u[k][i][1] * p[k][i]
+            right += u[k][j][1] * p[k][i]
+        print(f"       {left} ≥? {right}")
+        is_CE = is_CE and left >= right 
+
+
 print(f"> This is {'' if is_CE else 'Not '}a Correlated Equilibrium!")
 
