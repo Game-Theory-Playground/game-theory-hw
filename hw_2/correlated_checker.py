@@ -7,16 +7,30 @@ and correlated equilibrium hold true.
 
 ########## CHANGE THESE BASED ON PROBLEM ##########
 
-# Utility
+# # Example 1: Chicken Game
+# u = [
+#     [(-100,-100), (1,-1)],
+#     [(-1,1), (0,0)],
+# ]
+
+# p = [
+#     [0, 0.5],
+#     [0.5, 0]
+# ]
+
+
+
+# Example 2: Rock Paper Scissors
 u = [
-    [(-100,-100), (1,-1)],
-    [(-1,1), (0,0)],
+    [(0,0), (-1,1), (1,-1)],
+    [(1,-1), (0,0), (-1,1)],
+    [(-1,1), (1,-1), (0,0)],
 ]
 
-# Probability
 p = [
-    [0, 0.5],
-    [0.5, 0]
+    [1/3, 0, 0],
+    [0, 1/3, 0],
+    [0, 0, 1/3],
 ]
 
 
@@ -64,7 +78,7 @@ print(f"> This is {'' if is_CCE else 'Not '}a Coarse Correlated Equilibrium!")
 
 
 
-# ########## Correlated ##########
+########## Correlated ##########
 is_CE = True
 
 print("\n------  Correlated Equilibrium ------")
